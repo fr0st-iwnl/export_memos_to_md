@@ -11,7 +11,6 @@
 # Pull Requests: update this later
 #-----------------------------------------------------------------
 
-
 import sqlite3
 import os
 import subprocess
@@ -62,8 +61,20 @@ try:
 
     print(f"{EMOJI_DB} Found Memos container: {container_id}")
 
-    # Copy database
-    db_path = os.path.join(downloads_dir, "memos_prod.db")
+    # Main output folder for Markdown memos
+    output_dir = os.path.join(downloads_dir, "memos_md")
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Folder for attachments
+    assets_dir = os.path.join(output_dir, "memos_assets")
+    os.makedirs(assets_dir, exist_ok=True)
+
+    # Folder for the database
+    db_dir = os.path.join(output_dir, "memos_db")
+    os.makedirs(db_dir, exist_ok=True)
+
+    # Copy database into memos_db folder
+    db_path = os.path.join(db_dir, "memos_prod.db")
     print(f"{EMOJI_DB} Copying database to {db_path} ...")
     subprocess.run(
         ["docker", "cp", f"{container_id}:/var/opt/memos/memos_prod.db", db_path],
@@ -72,13 +83,6 @@ try:
         stderr=subprocess.DEVNULL   # <-- suppress errors too
     )
     print(f"{GREEN}{EMOJI_DB} Database copied successfully!{RESET}")
-
-
-    # Folders
-    output_dir = os.path.join(downloads_dir, "memos_md")
-    os.makedirs(output_dir, exist_ok=True)
-    assets_dir = os.path.join(output_dir, "memos_assets")
-    os.makedirs(assets_dir, exist_ok=True)
 
     # Connect to database
     conn = sqlite3.connect(db_path)
