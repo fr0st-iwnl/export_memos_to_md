@@ -4,6 +4,9 @@ Personal collection of scripts for my home server and self-hosted projects.
 
 ## 🔧 Collection
 
+## 🔧 Collection
+
+- `1`. [UseMemos](https://github.com/fr0st-iwnl/hub.fr0st.xyz/blob/master/UseMemos/README.md)
 
 ## 📄 License
 
