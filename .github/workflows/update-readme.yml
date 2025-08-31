@@ -8,6 +8,9 @@ on:
       - "*"       # trigger on root-level changes
       - "*/**"    # trigger on changes inside root-level folders
 
+permissions:
+  contents: write   # 👈 allow GitHub Actions to push changes
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
