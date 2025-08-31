@@ -1,4 +1,4 @@
-# export_memos_to_md.py
+# memos_exporter.py
 #
 # A script to export memos from a self-hosted Memos Docker instance into Markdown files, 
 # including attachments organized per memo
