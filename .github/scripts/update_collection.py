@@ -1,5 +1,6 @@
 import os
 import re
+import urllib.parse
 
 repo_url = "https://github.com/fr0st-iwnl/hub.fr0st.xyz/blob/master"
 
@@ -8,23 +9,28 @@ folders = [f for f in os.listdir(".") if os.path.isdir(f) and not f.startswith("
 folders.sort()
 
 # build collection list
-collection = "## 🔧 Collection\n\n"
+collection_lines = []
 for i, folder in enumerate(folders, 1):
-    collection += f"- `{i}`. [{folder}]({repo_url}/{folder}/README.md)\n"
+    folder_url = urllib.parse.quote(folder)  # encode spaces and special chars
+    collection_lines.append(f"- `{i}`. [{folder}]({repo_url}/{folder_url}/README.md)")
+
+collection = "## 🔧 Collection\n\n" + "\n".join(collection_lines) + "\n"
 
 # read current README.md
-with open("README.md", "r", encoding="utf-8") as f:
-    readme = f.read()
+if os.path.exists("README.md"):
+    with open("README.md", "r", encoding="utf-8") as f:
+        readme = f.read()
+else:
+    readme = ""
 
-# if section exists → replace it
+# check if collection section exists
 if "## 🔧 Collection" in readme:
+    # replace old collection section (between ## 🔧 Collection and next ## or EOF)
     pattern = r"(## 🔧 Collection\n)(.*?)(\n## |\Z)"  # match until next heading or EOF
     new_readme = re.sub(pattern, f"{collection}\n\\3", readme, flags=re.S)
 else:
-    # if not → append at the end
-    if not readme.endswith("\n"):
-        readme += "\n"
-    new_readme = readme + "\n" + collection
+    # prepend collection at the top if not present
+    new_readme = collection + "\n" + readme
 
 # write updated README.md
 with open("README.md", "w", encoding="utf-8") as f:
