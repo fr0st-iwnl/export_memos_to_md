@@ -1,2 +1,2 @@
-# export_memos_to_md
-script to export/save memos from memos.fr0st.xyz to local storage
+# 🏠 \\\ hub.fr0st.xyz
+Personal collection of scripts for my home server and self-hosted projects.
