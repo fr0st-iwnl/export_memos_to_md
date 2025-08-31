@@ -16,9 +16,12 @@ for i, folder in enumerate(folders, 1):
 with open("README.md", "r", encoding="utf-8") as f:
     readme = f.read()
 
-# replace old collection section (between ## 🔧 Collection and next ##)
-pattern = r"(## 🔧 Collection\n)(.*?)(\n## |\Z)"  # match until next heading or EOF
-new_readme = re.sub(pattern, f"{collection}\n\\3", readme, flags=re.S)
+# regex to replace existing collection or append if missing
+pattern = r"(## 🔧 Collection\n)(.*?)(?=\n## |\Z)"
+if re.search(pattern, readme, flags=re.S):
+    new_readme = re.sub(pattern, f"\\1\n{collection}", readme, flags=re.S)
+else:
+    new_readme = readme.strip() + "\n\n" + collection
 
 # write updated README.md
 with open("README.md", "w", encoding="utf-8") as f:
