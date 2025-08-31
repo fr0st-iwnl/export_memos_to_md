@@ -3,7 +3,7 @@ name: Update README Collection
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - "*/"   # only trigger when a folder is added/changed in root
 
