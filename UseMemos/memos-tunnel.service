@@ -1,0 +1,16 @@
+[Unit]
+Description=Cloudflare Tunnel for Memos
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=frost
+ExecStart=/usr/bin/cloudflared tunnel --config /home/frost/.cloudflared/memos.yml run memos
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=/home/frost/.cloudflared
+Environment="TUNNEL_ORIGIN_CERT=/home/frost/.cloudflared/cert.pem"
+
+[Install]
+WantedBy=multi-user.target

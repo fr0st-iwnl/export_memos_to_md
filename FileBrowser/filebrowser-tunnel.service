@@ -1,0 +1,16 @@
+[Unit]
+Description=FileBrowser + Cloudflare Tunnel
+After=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+User=frost
+WorkingDirectory=/home/frost
+ExecStart=/bin/bash -c "/usr/bin/cloudflared tunnel --config /home/frost/.cloudflared/filebrowser-tunnel.yml run filebrowser & \
+filebrowser -d /home/frost/.local/share/filebrowser/filebrowser.db -r /home/frost/Desktop/Host/filebrowser-files/ -a 127.0.0.1 -p 8081"
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

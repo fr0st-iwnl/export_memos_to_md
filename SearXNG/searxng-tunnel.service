@@ -1,0 +1,16 @@
+[Unit]
+Description=SearxNG + Cloudflare Tunnel
+After=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+User=frost
+WorkingDirectory=/home/frost/searxng
+ExecStart=/bin/bash -c "source venv/bin/activate && python -m searx.webapp & \
+/usr/bin/cloudflared tunnel --config /home/frost/.cloudflared/config.yml run searxng"
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
