@@ -12,7 +12,7 @@ folders.sort()
 collection_lines = []
 for i, folder in enumerate(folders, 1):
     folder_url = urllib.parse.quote(folder)  # encode spaces and special chars
-    collection_lines.append(f"- `{i}`. [{folder}]({repo_url}/{folder_url}/README.md)")
+    collection_lines.append(f"- `{i}`. [{folder}]({repo_url}/{folder_url})")
 
 collection = "## 🔧 Collection\n\n" + "\n".join(collection_lines) + "\n"
 
